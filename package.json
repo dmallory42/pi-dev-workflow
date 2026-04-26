@@ -2,6 +2,16 @@
   "name": "pi-dev-workflow",
   "version": "0.1.0",
   "description": "A pi skill for disciplined, lightweight software development workflow with coding guardrails.",
+  "author": "dmallory42",
+  "license": "MIT",
+  "homepage": "https://github.com/dmallory42/pi-dev-workflow#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmallory42/pi-dev-workflow.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dmallory42/pi-dev-workflow/issues"
+  },
   "keywords": [
     "pi-package",
     "pi-skill",
@@ -9,7 +19,11 @@
     "development-workflow",
     "coding-guardrails"
   ],
-  "license": "MIT",
+  "files": [
+    "skills",
+    "README.md",
+    "LICENSE"
+  ],
   "pi": {
     "skills": [
       "./skills"

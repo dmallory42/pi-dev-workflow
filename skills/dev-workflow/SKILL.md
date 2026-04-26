@@ -1,6 +1,7 @@
 ---
 name: dev-workflow
 description: Preferred development workflow for software tasks. Covers discussion, planning, spec writing, TDD-driven build, verification, and PR creation. Use when the user asks for help with any software development task.
+license: MIT
 ---
 
 # Dev Workflow

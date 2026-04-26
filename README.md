@@ -1,6 +1,6 @@
 # pi-dev-workflow
 
-A shareable [pi](https://github.com/badlogic/pi) skill for disciplined software development workflows.
+A shareable pi package containing a development workflow skill for disciplined software development.
 
 The skill guides agents through a proportional development process:
 
@@ -38,16 +38,14 @@ pi install /path/to/pi-dev-workflow
 
 ## Install from GitHub
 
-After this repo is published to GitHub:
-
 ```bash
-pi install git:github.com/<user>/pi-dev-workflow
+pi install git:github.com/dmallory42/pi-dev-workflow
 ```
 
 You can pin a version/tag:
 
 ```bash
-pi install git:github.com/<user>/pi-dev-workflow@v0.1.0
+pi install git:github.com/dmallory42/pi-dev-workflow@v0.1.0
 ```
 
 ## Skill
@@ -83,6 +81,27 @@ skills/dev-workflow/SKILL.md
 ```
 
 To iterate locally, edit that file and install the package by local path with `pi install`.
+
+## Publishing notes
+
+This repository is already structured as a pi package:
+
+- `package.json` includes the `pi-package` keyword for discoverability.
+- `package.json` declares `pi.skills` so pi can load the skill when installed from git, npm, or a local path.
+- The package `files` whitelist includes only the skill, README, and license for future npm publication.
+
+Before publishing a release, tag the version:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+Then users can install a pinned version with:
+
+```bash
+pi install git:github.com/dmallory42/pi-dev-workflow@v0.1.0
+```
 
 ## License
 
