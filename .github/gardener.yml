@@ -5,6 +5,19 @@ product:
   slug: pi-dev-workflow
   name: pi-dev-workflow
 
+model:
+  provider: openai
+  name: gpt-4.1-mini
+
+code:
+  checkout: true
+  branch: main
+
+issues:
+  enabled: true
+  includeRelatedIssues: true
+  verifyWithCode: true
+
 report:
   enabled: false
 
