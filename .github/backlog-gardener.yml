@@ -17,7 +17,7 @@ actions:
 
 prReviews:
   enabled: true
-  liveMode: false
+  liveMode: true
   includeDrafts: true
   triggers:
     opened: true
