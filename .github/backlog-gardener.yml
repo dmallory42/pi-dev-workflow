@@ -1,5 +1,5 @@
 enabled: true
-mode: report-only
+mode: suggest-comments
 
 product:
   slug: pi-dev-workflow
@@ -9,7 +9,7 @@ report:
   enabled: false
 
 actions:
-  issueComments: false
+  issueComments: true
   labels: false
   closeIssues: false
   createLinear: false
