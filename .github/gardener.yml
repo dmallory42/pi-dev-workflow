@@ -15,6 +15,9 @@ code:
 
 issues:
   enabled: true
+  comments:
+    enabled: true
+    minConfidence: medium
   includeRelatedIssues: true
   verifyWithCode: true
 
@@ -28,9 +31,13 @@ actions:
   createLinear: false
   openPullRequests: false
 
-prReviews:
+pullRequests:
   enabled: true
-  liveMode: true
+  reviews:
+    enabled: true
+    liveMode: true
+    mode: summary-review
+    dedupeByHeadSha: true
   includeDrafts: true
   triggers:
     opened: true
