@@ -1,0 +1,25 @@
+enabled: true
+mode: report-only
+
+product:
+  slug: pi-dev-workflow
+  name: pi-dev-workflow
+
+report:
+  enabled: false
+
+actions:
+  issueComments: false
+  labels: false
+  closeIssues: false
+  createLinear: false
+  openPullRequests: false
+
+prReviews:
+  enabled: true
+  liveMode: false
+  includeDrafts: true
+  triggers:
+    opened: true
+    readyForReview: true
+    synchronize: true
