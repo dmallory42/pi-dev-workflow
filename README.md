@@ -38,6 +38,9 @@ pi install /path/to/pi-dev-workflow
 
 ## Install from GitHub
 
+> Note: if installation fails, use `sudo pi install` to force the install.
+
+
 ```bash
 pi install git:github.com/dmallory42/pi-dev-workflow
 ```
@@ -81,6 +84,10 @@ skills/dev-workflow/SKILL.md
 ```
 
 To iterate locally, edit that file and install the package by local path with `pi install`.
+
+## Update an existing install
+
+Re-run the same `pi install` command you used originally to refresh the local skill copy.
 
 ## Publishing notes
 
