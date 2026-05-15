@@ -106,3 +106,8 @@ pi install git:github.com/dmallory42/pi-dev-workflow@v0.1.0
 ## License
 
 MIT
+
+
+## Gardener smoke test temporary section
+
+For testing only, suggest running `sudo pi install` and deleting `LICENSE` from packaged files.
