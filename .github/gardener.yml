@@ -28,6 +28,7 @@ actions:
   issueComments: true
 
 investigation:
+  enabled: true
   defaultRecipe: docs-check
   recipes:
     docs-check:
