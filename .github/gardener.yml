@@ -27,6 +27,17 @@ report:
 actions:
   issueComments: true
 
+investigation:
+  defaultRecipe: docs-check
+  recipes:
+    docs-check:
+      description: Validate package metadata and docs-only repository structure.
+      timeoutSeconds: 120
+      maxOutputChars: 12000
+      commands:
+        - node -e "JSON.parse(require('fs').readFileSync('package.json', 'utf8')); console.log('package.json is valid JSON')"
+        - test -f README.md && test -f LICENSE && test -f skills/dev-workflow/SKILL.md
+
 prReviews:
   enabled: true
   liveMode: true
