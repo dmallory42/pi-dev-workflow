@@ -1,0 +1,49 @@
+enabled: true
+mode: suggest-comments
+
+product:
+  slug: pi-dev-workflow
+  name: pi-dev-workflow
+
+model:
+  provider: pi
+  name: gpt-5.5
+
+code:
+  checkout: true
+  branch: main
+
+issues:
+  enabled: true
+  comments:
+    enabled: true
+    minConfidence: medium
+  includeRelatedIssues: true
+  verifyWithCode: true
+
+report:
+  enabled: false
+
+actions:
+  issueComments: true
+
+investigation:
+  enabled: true
+  defaultRecipe: docs-check
+  recipes:
+    docs-check:
+      description: Validate package metadata and docs-only repository structure.
+      timeoutSeconds: 120
+      maxOutputChars: 12000
+      commands:
+        - node -e "JSON.parse(require('fs').readFileSync('package.json', 'utf8')); console.log('package.json is valid JSON')"
+        - test -f README.md && test -f LICENSE && test -f skills/dev-workflow/SKILL.md
+
+prReviews:
+  enabled: true
+  liveMode: true
+  includeDrafts: true
+  triggers:
+    opened: true
+    readyForReview: true
+    synchronize: true
