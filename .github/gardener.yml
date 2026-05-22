@@ -6,8 +6,8 @@ product:
   name: pi-dev-workflow
 
 model:
-  provider: openai
-  name: gpt-4.1-mini
+  provider: pi
+  name: gpt-5.5
 
 code:
   checkout: true
