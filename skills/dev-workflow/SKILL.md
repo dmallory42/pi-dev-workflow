@@ -11,6 +11,7 @@ Follow this workflow for all software development tasks.
 ## When to Use
 
 When the user asks to:
+
 - build something new
 - fix a bug
 - add a feature
@@ -143,9 +144,11 @@ If the work is large, break it into discrete subtasks. Each subtask should have 
 ### Subtask 1: <name>
 
 **Requirements:**
+
 1. ...
 
 **Acceptance criteria:**
+
 - [ ] ...
 ```
 
