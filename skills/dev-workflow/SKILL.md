@@ -1,17 +1,16 @@
 ---
 name: dev-workflow
-description: Preferred development workflow for software tasks. Covers discussion, planning, spec writing, TDD-driven build, verification, and PR creation. Use when the user asks for help with any software development task.
+description: Follow an explicitly requested full development process with discussion, specification and TDD. Do not activate for ordinary coding tasks or small fixes.
 license: MIT
 ---
 
 # Dev Workflow
 
-Follow this workflow for all software development tasks.
+Use this workflow only when the user explicitly requests the full discussion, specification and TDD process. For ordinary coding tasks, follow repository instructions and use a workflow proportional to the task.
 
 ## When to Use
 
-When the user asks to:
-
+Only when the user explicitly requests this full workflow for work such as:
 - build something new
 - fix a bug
 - add a feature
@@ -23,10 +22,12 @@ When the user asks to:
 
 Use the workflow at a weight appropriate to the task size:
 
-- **Small tasks**: discuss → align → spec → build → verify → PR. A separate `plan.md` is optional and usually unnecessary.
-- **Medium/large tasks**: discuss → align → plan → spec → build → verify → PR.
+- **Small tasks**: clarify/discuss → align → propose solution + trade-offs → spec → build → verify → PR. A separate `plan.md` is optional and usually unnecessary.
+- **Medium/large tasks**: clarify/discuss → align → plan with pre-review → spec → build → verify → PR.
 
 Infer the likely task size from signals in the user's request and the issue context. For example, wording like "quick fix", "one-liner", "small typo", "rename", "update this text", or a narrowly scoped bug usually indicates a small task. Broad feature requests, ambiguous behavior changes, multiple affected systems, data migrations, concurrency/state changes, or unclear acceptance criteria usually indicate medium/large work.
+
+Ask clarifying questions before proposing or implementing when requirements, success criteria, constraints, or preferences are unclear. If the request is already clear, do not invent questions; state that there are no open questions and briefly list the assumptions being made.
 
 If the task appears quick or one-line, check with the user before using the lightweight path, e.g. "This looks like a small task; I'll skip the separate plan and write a compact spec unless you want the full workflow." If uncertain, start lightweight and add a plan only when the trade-offs, scope, or sequencing need it.
 
@@ -34,26 +35,31 @@ If the task appears quick or one-line, check with the user before using the ligh
 
 Before writing code, satisfy these gates at a level proportional to the task size. For small tasks, this can be a short sentence or two. For larger tasks, capture the answers in the plan/spec.
 
-1. **Success Criteria** — State what observable outcome means the task is done, e.g. "Success means test X passes" or "Success means the README text is updated and the build still passes."
-2. **Assumptions** — Surface important assumptions about user intent, existing behavior, requirements, or constraints. Verify them in code where possible; ask when they are user preferences or materially affect the solution.
-3. **Scope** — Define the boundary of the work: files, functions, systems, and what is explicitly off-limits. Avoid drive-by fixes and "while I'm here" changes.
-4. **Simplicity** — Start with the simplest approach that satisfies the spec. Add abstractions, configuration, dependencies, or generalized APIs only when current requirements justify them.
+1. **Clarifying Questions** — Ask anything needed to understand the request before proposing or implementing. If there are no open questions, say so and state the assumptions being made.
+2. **Success Criteria** — State what observable outcome means the task is done, e.g. "Success means test X passes" or "Success means the README text is updated and the build still passes."
+3. **Assumptions** — Surface important assumptions about user intent, existing behavior, requirements, or constraints. Verify them in code where possible; ask when they are user preferences or materially affect the solution.
+4. **Scope** — Define the boundary of the work: files, functions, systems, and what is explicitly off-limits. Avoid drive-by fixes and "while I'm here" changes.
+5. **Simplicity** — Start with the simplest approach that satisfies the spec. Add abstractions, configuration, dependencies, or generalized APIs only when current requirements justify them.
+6. **Trade-offs** — For small tasks, mention the key trade-off in the proposed solution. For larger tasks, pre-review the approach in the plan before building.
 
 For a likely small task, a lightweight guardrail check is enough, for example:
 
-> This looks small. Success means the typo is fixed and existing checks still pass. I'm assuming no behavior change is intended. I'll only touch `README.md`. Simplest approach: direct text edit.
+> This looks small. I don't have clarifying questions. Success means the typo is fixed and existing checks still pass. I'm assuming no behavior change is intended. I'll only touch `README.md`. Simplest approach: direct text edit; trade-off: no broader copy cleanup.
 
 Red flags that require stopping to clarify or re-scope:
 
 - You cannot state observable success criteria
+- You have unresolved clarifying questions that materially affect the solution
 - You are thinking "they probably want..." about an important behavior or preference
 - The solution is expanding beyond the agreed files/systems
 - You are adding abstractions, configuration, helpers, or dependencies for hypothetical future use
+- You are adding a new pathway, split, flag, abstraction, generated config, job, or lifecycle step without checking whether this is the layer future maintainers would expect
 - You are about to modify unrelated code or perform drive-by cleanup
 
-### 1. Discuss
+### 1. Discuss / Clarify
 
-- Understand the goal by asking clarifying questions
+- Understand the goal by asking clarifying questions when requirements, success criteria, constraints, or preferences are unclear
+- If the request is clear, state that there are no open questions and list the assumptions being made
 - Talk through the approach and options
 - Do not start coding or planning until the goal is clear
 
@@ -64,13 +70,22 @@ Red flags that require stopping to clarify or re-scope:
 - Surface important assumptions and resolve uncertain or preference-dependent ones
 - Identify what is explicitly out of scope
 - Confirm the simplest reasonable approach for the current requirements
+- For small tasks, propose the solution and mention any important trade-offs before coding
 - Get the user's agreement before proceeding
 
-### 3. Plan
+### 3. Critical Evaluation / Pre-review
+
+Use only as much ceremony as the task warrants.
+
+- **Small tasks**: do not write a separate plan; briefly state the proposed solution and the trade-off being made, including what is intentionally not being changed.
+- **Medium/large tasks**: include a pre-review in the plan before writing the spec. Cover likely reviewer objections, alternatives considered, ownership/right layer, sibling use cases or callers, and complexity versus payoff.
+- **Generic rule of thumb**: if a solution adds a new pathway, split, flag, abstraction, generated config, job, or lifecycle step, pause and ask: "Are we solving this in the place future maintainers would expect?"
+
+### 4. Plan
 
 - For small tasks, this step may be skipped after detecting the task is likely lightweight and explicitly confirming with the user
 - For medium/large tasks, write a planning document at `~/.pi/docs/specs/<task-name>/plan.md`
-- The plan captures high-level thinking, options, trade-offs, and open questions
+- The plan captures high-level thinking, options, trade-offs, open questions, and the pre-review of the proposed approach
 - Use this format:
 
 ```markdown
@@ -89,7 +104,15 @@ Why this work is needed. Background and motivation.
 
 ## Approach
 
-High-level approach, options considered, and trade-offs.
+High-level approach and chosen direction.
+
+## Options Considered
+
+Briefly list the main alternatives considered, including a smaller/no-change option when relevant, and why they were not chosen.
+
+## Pre-review / Risks
+
+Likely reviewer objections, ownership/right-layer concerns, sibling use cases or callers, and complexity versus payoff.
 
 ## Open Questions
 
@@ -99,7 +122,7 @@ Anything unresolved that needs input before specifying.
 - Present the plan to the user and wait for approval before moving to spec
 - If the plan step was skipped for a small task, proceed directly to spec after alignment
 
-### 4. Spec
+### 5. Spec
 
 - Turn the approved plan, or the aligned scope for small tasks, into a formal specification at `~/.pi/docs/specs/<task-name>/spec.md`
 - Use this format:
@@ -144,18 +167,16 @@ If the work is large, break it into discrete subtasks. Each subtask should have 
 ### Subtask 1: <name>
 
 **Requirements:**
-
 1. ...
 
 **Acceptance criteria:**
-
 - [ ] ...
 ```
 
 - Present the spec to the user and wait for approval before building
 - The spec is the contract: tests and implementation are measured against it
 
-### 5. Build
+### 6. Build
 
 - Create a feature branch
   - Follow the repo's branch naming conventions
@@ -179,7 +200,7 @@ If the work is large, break it into discrete subtasks. Each subtask should have 
   - Whether the spec still looks right or needs adjustment
 - Keep commits small with brief, descriptive commit messages
 
-### 6. Verify
+### 7. Verify
 
 - Run the appropriate level of testing for the task:
   - Unit tests
@@ -189,7 +210,7 @@ If the work is large, break it into discrete subtasks. Each subtask should have 
 - Ensure all tests pass
 - Do not move to PR until verification is complete
 
-### 7. PR
+### 8. PR
 
 - Create a pull request via `gh pr create` unless told otherwise
   - Some repos may define alternative PR creation paths; follow those if specified
@@ -220,8 +241,10 @@ These are handled separately if and when the user asks.
 ## Guidelines
 
 - Do not skip steps silently. If the user wants to jump ahead, confirm which steps to skip explicitly.
+- Do not skip clarifying questions silently: ask them when needed, or state that there are no open questions and list assumptions.
 - Use signals from the request and repo context to detect likely quick/one-liner tasks, then confirm the lightweight path with the user.
-- For small tasks, skipping the separate plan document is allowed after alignment; the spec remains the contract.
+- For small tasks, skipping the separate plan document is allowed after alignment; still propose the solution and mention trade-offs before coding. The spec remains the contract.
+- For medium/large tasks that need a plan, pre-review the solution in the plan before writing the spec.
 - Do not start coding before the spec is approved.
 - Do not push directly to main. Always use a branch and PR.
 - Do not add features the user did not ask for. Suggest extras as options, not defaults.
